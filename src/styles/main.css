@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F5F0E8;
+    color: #1a1a1a;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Amiri', serif;
+  }
+}
+
+@layer components {
+  .moroccan-card {
+    @apply bg-white rounded-moroccan shadow-lg border border-safran-200;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4A843' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .moroccan-btn-primary {
+    @apply bg-majorelle-500 text-white px-6 py-3 rounded-moroccan font-semibold 
+           hover:bg-majorelle-600 transition-all duration-300 shadow-md
+           hover:shadow-lg transform hover:-translate-y-0.5;
+  }
+
+  .moroccan-btn-secondary {
+    @apply bg-terre-500 text-white px-6 py-3 rounded-moroccan-reverse font-semibold 
+           hover:bg-terre-600 transition-all duration-300 shadow-md
+           hover:shadow-lg transform hover:-translate-y-0.5;
+  }
+
+  .moroccan-input {
+    @apply w-full px-4 py-3 rounded-moroccan border-2 border-safran-200 
+           focus:border-majorelle-500 focus:outline-none transition-colors
+           bg-cream-50;
+  }
+
+  .moroccan-arch {
+    border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+  }
+
+  .zellige-bg {
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0 L100 50 L50 100 L0 50 Z' fill='none' stroke='%23D4A843' stroke-width='0.5' stroke-opacity='0.1'/%3E%3Cpath d='M50 10 L90 50 L50 90 L10 50 Z' fill='none' stroke='%231B4D89' stroke-width='0.5' stroke-opacity='0.1'/%3E%3C/svg%3E");
+  }
+
+  .gradient-moroccan {
+    background: linear-gradient(135deg, #1B4D89 0%, #C75B39 50%, #D4A843 100%);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #1B4D89, #C75B39);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
