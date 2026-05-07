@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { 
-  Send, Paperclip, Phone, Video, ArrowLeft, 
-  MoreVertical, Clock, Check, CheckCheck 
+import {
+  Send, Paperclip, Phone, Video, ArrowLeft,
+  MoreVertical, Clock, Check, CheckCheck
 } from 'lucide-react'
 
 const PatientChat = () => {
@@ -12,21 +12,21 @@ const PatientChat = () => {
     {
       id: 1,
       sender: 'therapist',
-      text: 'Bonjour ! Je suis ravie de pouvoir vous accompagner dans votre parcours. Comment vous sentez-vous aujourd'hui ?',
+      text: `Bonjour ! Je suis ravie de pouvoir vous accompagner dans votre parcours. Comment vous sentez-vous aujourd'hui ?`,
       time: '14:30',
       status: 'read'
     },
     {
       id: 2,
       sender: 'patient',
-      text: 'Bonjour Dr. Alaoui, merci de prendre le temps de me parler. Je me sens un peu anxieux ces derniers temps.',
+      text: `Bonjour Dr. Alaoui, merci de prendre le temps de me parler. Je me sens un peu anxieux ces derniers temps.`,
       time: '14:32',
       status: 'read'
     },
     {
       id: 3,
       sender: 'therapist',
-      text: 'Je comprends. L'anxiété est une réponse normale au stress, mais elle peut devenir envahissante. Pouvez-vous me dire ce qui déclenche ces sentiments ?',
+      text: `Je comprends. L'anxiété est une réponse normale au stress, mais elle peut devenir envahissante. Pouvez-vous me dire ce qui déclenche ces sentiments ?`,
       time: '14:35',
       status: 'read'
     }
@@ -74,7 +74,7 @@ const PatientChat = () => {
       const response = {
         id: messages.length + 2,
         sender: 'therapist',
-        text: 'Merci pour votre partage. C'est important d'identifier ces déclencheurs. Nous allons travailler ensemble sur des techniques pour mieux gérer cette anxiété.',
+        text: `Merci pour votre partage. C'est important d'identifier ces déclencheurs. Nous allons travailler ensemble sur des techniques pour mieux gérer cette anxiété.`,
         time: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
         status: 'read'
       }
@@ -96,8 +96,8 @@ const PatientChat = () => {
               <Link to="/patient/dashboard" className="text-white hover:text-cream-200 transition-colors">
                 <ArrowLeft className="w-6 h-6" />
               </Link>
-              <img 
-                src={therapist.image} 
+              <img
+                src={therapist.image}
                 alt={therapist.name}
                 className="w-12 h-12 rounded-full object-cover border-2 border-white"
               />
@@ -107,7 +107,7 @@ const PatientChat = () => {
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <Link 
+              <Link
                 to={`/patient/booking/${therapistId}`}
                 className="p-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-colors"
                 title="Réserver une séance vidéo"
@@ -130,8 +130,8 @@ const PatientChat = () => {
                 className={`flex ${message.sender === 'patient' ? 'justify-end' : 'justify-start'}`}
               >
                 <div className={`max-w-[70%] ${
-                  message.sender === 'patient' 
-                    ? 'bg-majorelle-500 text-white rounded-moroccan' 
+                  message.sender === 'patient'
+                    ? 'bg-majorelle-500 text-white rounded-moroccan'
                     : 'bg-white text-majorelle-900 rounded-moroccan-reverse border border-safran-200'
                 } p-4`}>
                   <p className="text-sm leading-relaxed">{message.text}</p>
@@ -178,12 +178,12 @@ const PatientChat = () => {
                 placeholder="Écrivez votre message..."
                 className="flex-1 moroccan-input"
               />
-              <button 
+              <button
                 type="submit"
                 disabled={!newMessage.trim()}
                 className={`p-3 rounded-full transition-all ${
-                  newMessage.trim() 
-                    ? 'bg-majorelle-500 text-white hover:bg-majorelle-600 shadow-md' 
+                  newMessage.trim()
+                    ? 'bg-majorelle-500 text-white hover:bg-majorelle-600 shadow-md'
                     : 'bg-cream-200 text-cream-400'
                 }`}
               >
