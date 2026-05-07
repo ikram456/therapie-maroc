@@ -6,7 +6,7 @@ import { User, Mail, Lock, Phone, Calendar, ArrowRight, Heart } from 'lucide-rea
 
 const PatientRegister = () => {
   const navigate = useNavigate()
-  const { login } = useAuth()
+  const { registerPatient } = useAuth()
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -19,6 +19,7 @@ const PatientRegister = () => {
   })
   const [errors, setErrors] = useState({})
   const [isLoading, setIsLoading] = useState(false)
+  const [firebaseError, setFirebaseError] = useState('')
 
   const validateForm = () => {
     const newErrors = {}
@@ -32,7 +33,6 @@ const PatientRegister = () => {
     if (!formData.phone) newErrors.phone = 'Téléphone requis'
     if (!formData.birthDate) newErrors.birthDate = 'Date de naissance requise'
     if (!formData.gender) newErrors.gender = 'Genre requis'
-
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
@@ -42,28 +42,24 @@ const PatientRegister = () => {
     if (!validateForm()) return
 
     setIsLoading(true)
-    // Simulation API call
-    setTimeout(() => {
-      const userData = {
-        id: 1,
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        phone: formData.phone,
-        birthDate: formData.birthDate,
-        gender: formData.gender
-      }
-      login(userData, 'patient')
-      setIsLoading(false)
+    setFirebaseError('')
+    try {
+      await registerPatient(formData)
       navigate('/patient/questionnaire')
-    }, 1500)
+    } catch (error) {
+      if (error.code === 'auth/email-already-in-use') {
+        setFirebaseError('Cet email est déjà utilisé')
+      } else {
+        setFirebaseError(error.message || 'Une erreur est survenue')
+      }
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
-    if (errors[e.target.name]) {
-      setErrors({ ...errors, [e.target.name]: '' })
-    }
+    if (errors[e.target.name]) setErrors({ ...errors, [e.target.name]: '' })
   }
 
   return (
@@ -75,7 +71,6 @@ const PatientRegister = () => {
           transition={{ duration: 0.5 }}
           className="moroccan-card p-8 md:p-12"
         >
-          {/* Header */}
           <div className="text-center mb-10">
             <div className="w-20 h-20 bg-gradient-moroccan rounded-full flex items-center justify-center mx-auto mb-6">
               <Heart className="w-10 h-10 text-white" />
@@ -88,9 +83,13 @@ const PatientRegister = () => {
             </p>
           </div>
 
-          {/* Form */}
+          {firebaseError && (
+            <div className="bg-terre-50 border border-terre-300 text-terre-700 px-4 py-3 rounded-lg mb-6">
+              {firebaseError}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Name Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-semibold text-majorelle-800 mb-2">
@@ -124,7 +123,6 @@ const PatientRegister = () => {
               </div>
             </div>
 
-            {/* Email */}
             <div>
               <label className="block text-sm font-semibold text-majorelle-800 mb-2">
                 <Mail className="w-4 h-4 inline mr-2" />
@@ -141,7 +139,6 @@ const PatientRegister = () => {
               {errors.email && <p className="text-terre-500 text-sm mt-1">{errors.email}</p>}
             </div>
 
-            {/* Password Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-semibold text-majorelle-800 mb-2">
@@ -175,7 +172,6 @@ const PatientRegister = () => {
               </div>
             </div>
 
-            {/* Phone & Birth Date */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-semibold text-majorelle-800 mb-2">
@@ -208,11 +204,8 @@ const PatientRegister = () => {
               </div>
             </div>
 
-            {/* Gender */}
             <div>
-              <label className="block text-sm font-semibold text-majorelle-800 mb-2">
-                Genre
-              </label>
+              <label className="block text-sm font-semibold text-majorelle-800 mb-2">Genre</label>
               <div className="flex space-x-4">
                 {['homme', 'femme'].map((g) => (
                   <label key={g} className="flex items-center space-x-2 cursor-pointer">
@@ -231,7 +224,6 @@ const PatientRegister = () => {
               {errors.gender && <p className="text-terre-500 text-sm mt-1">{errors.gender}</p>}
             </div>
 
-            {/* Submit */}
             <button
               type="submit"
               disabled={isLoading}
@@ -248,7 +240,6 @@ const PatientRegister = () => {
             </button>
           </form>
 
-          {/* Login Link */}
           <p className="text-center mt-8 text-majorelle-600">
             Déjà un compte ?{' '}
             <Link to="/patient/login" className="text-terre-600 hover:text-terre-800 font-semibold underline">

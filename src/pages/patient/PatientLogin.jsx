@@ -6,28 +6,36 @@ import { Mail, Lock, ArrowRight, Heart } from 'lucide-react'
 
 const PatientLogin = () => {
   const navigate = useNavigate()
-  const { login } = useAuth()
+  const { loginPatient } = useAuth()
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [errors, setErrors] = useState({})
   const [isLoading, setIsLoading] = useState(false)
+  const [firebaseError, setFirebaseError] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     const newErrors = {}
     if (!formData.email) newErrors.email = 'Email requis'
     if (!formData.password) newErrors.password = 'Mot de passe requis'
-
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
       return
     }
 
     setIsLoading(true)
-    setTimeout(() => {
-      login({ id: 1, email: formData.email, firstName: 'Ahmed' }, 'patient')
-      setIsLoading(false)
+    setFirebaseError('')
+    try {
+      await loginPatient(formData.email, formData.password)
       navigate('/patient/dashboard')
-    }, 1500)
+    } catch (error) {
+      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+        setFirebaseError('Email ou mot de passe incorrect')
+      } else {
+        setFirebaseError(error.message || 'Une erreur est survenue')
+      }
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -50,6 +58,12 @@ const PatientLogin = () => {
               Accédez à votre espace personnel
             </p>
           </div>
+
+          {firebaseError && (
+            <div className="bg-terre-50 border border-terre-300 text-terre-700 px-4 py-3 rounded-lg mb-6">
+              {firebaseError}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
