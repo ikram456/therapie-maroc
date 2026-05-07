@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { 
-  Send, Paperclip, ArrowLeft, MoreVertical, 
-  Calendar, FileText, Check, CheckCheck, User 
+import {
+  Send, Paperclip, ArrowLeft, MoreVertical,
+  Calendar, FileText, Check, CheckCheck, User
 } from 'lucide-react'
 
 const TherapistChat = () => {
@@ -12,28 +12,28 @@ const TherapistChat = () => {
     {
       id: 1,
       sender: 'patient',
-      text: 'Bonjour Dr. Alaoui, merci d'avoir accepté ma demande. Je me sens un peu anxieux ces derniers temps.',
+      text: `Bonjour Dr. Alaoui, merci d'avoir accepté ma demande. Je me sens un peu anxieux ces derniers temps.`,
       time: '14:30',
       status: 'read'
     },
     {
       id: 2,
       sender: 'therapist',
-      text: 'Bonjour ! Je suis ravie de pouvoir vous accompagner. Pouvez-vous me dire depuis quand vous ressentez cette anxiété ?',
+      text: `Bonjour ! Je suis ravie de pouvoir vous accompagner. Pouvez-vous me dire depuis quand vous ressentez cette anxiété ?`,
       time: '14:35',
       status: 'read'
     },
     {
       id: 3,
       sender: 'patient',
-      text: 'Ça fait environ 3 mois maintenant. C'est surtout au travail que ça se manifeste.',
+      text: `Ça fait environ 3 mois maintenant. C'est surtout au travail que ça se manifeste.`,
       time: '14:38',
       status: 'read'
     },
     {
       id: 4,
       sender: 'therapist',
-      text: 'Je comprends. Le stress professionnel est très courant. Nous allons travailler ensemble sur des techniques de gestion du stress.',
+      text: `Je comprends. Le stress professionnel est très courant. Nous allons travailler ensemble sur des techniques de gestion du stress.`,
       time: '14:42',
       status: 'read'
     }
@@ -111,7 +111,7 @@ const TherapistChat = () => {
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <button 
+                  <button
                     onClick={() => setShowPatientInfo(!showPatientInfo)}
                     className="lg:hidden p-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-colors"
                   >
@@ -133,8 +133,8 @@ const TherapistChat = () => {
                     className={`flex ${message.sender === 'therapist' ? 'justify-end' : 'justify-start'}`}
                   >
                     <div className={`max-w-[70%] ${
-                      message.sender === 'therapist' 
-                        ? 'bg-majorelle-500 text-white rounded-moroccan' 
+                      message.sender === 'therapist'
+                        ? 'bg-majorelle-500 text-white rounded-moroccan'
                         : 'bg-white text-majorelle-900 rounded-moroccan-reverse border border-safran-200'
                     } p-4`}>
                       <p className="text-sm leading-relaxed">{message.text}</p>
@@ -165,12 +165,12 @@ const TherapistChat = () => {
                     placeholder="Écrivez votre message..."
                     className="flex-1 moroccan-input"
                   />
-                  <button 
+                  <button
                     type="submit"
                     disabled={!newMessage.trim()}
                     className={`p-3 rounded-full transition-all ${
-                      newMessage.trim() 
-                        ? 'bg-majorelle-500 text-white hover:bg-majorelle-600 shadow-md' 
+                      newMessage.trim()
+                        ? 'bg-majorelle-500 text-white hover:bg-majorelle-600 shadow-md'
                         : 'bg-cream-200 text-cream-400'
                     }`}
                   >
@@ -240,7 +240,7 @@ const TherapistChat = () => {
 
               {/* Actions */}
               <div className="mt-6 space-y-3">
-                <Link 
+                <Link
                   to={`/therapist/booking/${patientId}`}
                   className="block w-full text-center moroccan-btn-primary py-3"
                 >
